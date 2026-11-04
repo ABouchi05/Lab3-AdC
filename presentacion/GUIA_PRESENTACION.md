@@ -5,7 +5,49 @@
 
 ---
 
-## 1. Preparación 5 minutos antes de entrar a presentar
+## 1. ¿Cuál es el "código principal" y cómo arrancar la presentación? (Sin FPGA)
+
+En los proyectos anteriores lo primero que hacían era programar la FPGA y mostrar que el juego prendía. En este proyecto **no hay placa física** porque diseñaron un **chip real a medida (ASIC)** en tecnología de 180 nm (`gf180mcuD`). Aquí el equivalente a "correr el código principal y ver que funciona" se divide en **3 piezas clave**:
+
+### A. El "código principal" del hardware (`rtl/asic_top.v`)
+- **`rtl/asic_top.v`** es el módulo superior (el chip completo) sin primitivas de FPGA. Expone los pines lógicos (`clk_i`, `rst_ni`, `buttons_i[3:0]`, `leds_o[3:0]`, `segment1_o[6:0]`, `segment2_o[6:0]`, `spi_sclk_i`, `spi_mosi_i`, `spi_cs_ni`, `spi_miso_o`) e instancia adentro a **`rtl/pochoco_soc.v`**.
+- **`rtl/pochoco_soc.v`** conecta las 3 partes del sistema:
+  1. **El núcleo RISC-V (`rtl/espino_core/espino_core.v`)**: contiene la etapa Fetch (`espino_if_stage.v`), Decode (`espino_id_stage.v`, `espino_decoder.v`, `espino_controller.v`), la ALU (`espino_alu.v`), el banco de registros en Flip-Flops (`espino_register_file.v`) y la unidad Load/Store (`espino_load_store_unit.v`).
+  2. **La memoria ASIC (`rtl/generated/asic_memory.v`)**: generada automáticamente desde el programa assembler **`sw/game.s`** con `tools/assembler.py`, donde el parámetro `Unified` elige entre la arquitectura **ROM + 1 palabra RAM (`Unified=0`)** y la **Memoria Unificada en Flip-Flops (`Unified=1`)**.
+  3. **Los periféricos (`rtl/pochoco_periph.v`, `rtl/cycle_counter.v` y `rtl/pochoco_spi_slave.v`)**: controlan los displays de 7 segmentos, LEDs, botones, el contador de ciclos de 32 bits y el esclavo SPI.
+
+### B. El "archivo principal" que fabrica el chip (`config/rom_100_40.json` + LibreLane)
+- En vez de darle a *Generate Bitstream* en Vivado/iCEcube2, aquí le pasas **`config/rom_100_40.json`** a **LibreLane**:
+  ```powershell
+  cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
+  wsl -d Ubuntu -u root -- bash tools/run_wsl.sh 'librelane --pdk gf180mcuD --run-tag demo_vivo config/rom_100_40.json'
+  ```
+- Ese comando toma tus archivos `.v`, los sintetiza a compuertas reales de 180 nm, arma el *Floorplan*, posiciona las celdas (*Placement*), crea el árbol de reloj (*CTS*), cablea todas las pistas de metal (*Routing*) y verifica que no haya errores físicos (*DRC, LVS, Antena y Timing en los 9 corners*).
+- **El resultado final** (el equivalente al `.bit` de la FPGA, pero para mandar a la fábrica de silicio) es el archivo **`results/physical/rom_100_40/final/asic_top.gds`**, que muestras abierto en **KLayout**.
+
+### C. Cómo demostrar en vivo que el procesador ejecuta el juego de verdad (Simulación RTL y Post-Síntesis)
+Como no hay FPGA en la mesa, demuestras que el chip ejecuta el juego corriendo los testbenches del sistema (`tests/tb_asic.v`, `tests/tb_memory.v`, `tests/tb_alu.v`):
+- **Regresión completa con compuertas reales GF180 (`tools/run_mapped_wsl.sh`)**:
+  ```powershell
+  cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
+  wsl -d Ubuntu -u root -- bash tools/run_wsl.sh 'bash tools/run_mapped_wsl.sh'
+  ```
+  Sintetiza el chip con Yosys hacia celdas del PDK `gf180mcu_fd_sc_mcu7t5v0` y simula con `iverilog` los **89,186 ciclos** completos de una partida (incluyendo error de botón mostrando `EE`, 10 rondas válidas, promedio y reinicio), comprobando ciclo a ciclo que el netlist físico del chip responde idéntico al RTL (`PASS GF180 post-synthesis functional regression 89186 cycles`).
+- **Regresión completa de ambas memorias (`ROM` vs `FF`) y ALU (`tools/verify.py`)**:
+  ```powershell
+  cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
+  wsl -d Ubuntu -u root -- bash tools/run_wsl.sh 'python3 tools/verify.py'
+  ```
+  Verifica `tb_memory.v`, `tb_alu.v` y la partida completa de 89,186 ciclos comparando `Unified=0` (ROM) contra `Unified=1` (FF) en RTL y post-síntesis (`PASS: both memories; RTL == generic post-synthesis each clock; full game regression`).
+
+### Guion para tus primeros 60 segundos frente al profesor:
+1. **Muestras KLayout ya abierto** con `asic_top.gds`: *"Acá tenemos el layout final GDSII de nuestro SoC completo (`asic_top.v`) integrado en 180 nm con la memoria de programa en ROM (`rom_100_40`), cerrado sin violaciones de DRC, LVS, Antena ni Timing en los 9 corners"*.
+2. **Muestras en VS Code `rtl/asic_top.v`, `rtl/pochoco_soc.v` y `config/rom_100_40.json`**: *"Este es nuestro módulo top limpio de primitivas de FPGA y esta es la configuración con la que LibreLane genera el chip"*.
+3. **Le preguntas al profesor**: *"¿Quiere que dejemos corriendo una corrida de LibreLane o la simulación post-síntesis del juego de fondo mientras le mostramos las métricas de área, frecuencia máxima, camino crítico y DRC/LVS/Antena?"*
+
+---
+
+## 2. Preparación 5 minutos antes de entrar a presentar
 
 Antes de que empiece tu turno, deja preparadas **4 cosas** en tu computador:
 
@@ -31,7 +73,7 @@ Cuando aparezca `[nix-shell:/opt/lab3/librelane-linux]#`, ya tienes todas las he
 
 ---
 
-## 2. Comandos para abrir herramientas "no comunes" (KLayout, OpenROAD GUI, reportes `.gz`)
+## 3. Comandos para abrir herramientas "no comunes" (KLayout, OpenROAD GUI, reportes `.gz`)
 
 Ahora que tu ruta (`C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final`) **no tiene espacios**, ningún comando fallará por comillas.
 
@@ -49,6 +91,7 @@ Ahora que tu ruta (`C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\
   ```
 
 #### Cómo manejar KLayout frente al profesor:
+- **Al abrir por primera vez**: Si sale el cartel preguntando por *Show full hierarchy mode*, dale a **Yes** (así dibuja todas las celdas internas de inmediato).
 - **Zoom**: Rueda del ratón, o selecciona un área arrastrando con el **clic derecho**.
 - **Ajustar todo el chip a la pantalla**: Presiona la tecla **`F`** (*Fit*).
 - **Ver el interior de las celdas estándar (transistores y ruteo interno)**: Presiona **`Shift + F`** (o menú superior `Display` → `Full Hierarchy`). Si solo se ven cajas vacías, `Shift + F` muestra todo el contenido.
@@ -67,7 +110,7 @@ Ahora que tu ruta (`C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\
   ```
 - **Desde PowerShell:**
   ```powershell
-  wsl -d Ubuntu -u root -- bash -lc '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && cd /opt/lab3/librelane-linux && nix-shell --run "openroad -gui"'
+  wsl -d Ubuntu -u root -- bash -lc '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && export NIX_BUILD_SHELL=/bin/bash && cd /opt/lab3/librelane-linux && nix-shell --run "openroad -gui"'
   ```
 - **Nota útil**: En `results/physical/rom_100_40/final/asic_top.odb` está la base de datos OpenDB final dentro de tu repositorio, y las corridas completas originales (con todas las bases de datos `.odb` de cada etapa intermedia) están guardadas dentro de Ubuntu en `/opt/lab3/design/config/runs/`. Puedes listarlas dentro de Ubuntu con:
   ```bash
@@ -100,7 +143,7 @@ En `results/physical/rom_100_40/timing/55-openroad-stapostpnr/` están el resume
 
 ---
 
-## 3. ¿Qué nos van a pedir hacer o cambiar en vivo?
+## 4. ¿Qué nos van a pedir hacer o cambiar en vivo?
 
 Según el enunciado (`Proyecto_3_arquitectura.pdf`):
 > *"Durante la defensa se harán preguntas sobre cualquier parte del informe, del RTL y del assembler. Todos los integrantes deben poder responder."*
@@ -187,7 +230,7 @@ python tools/validate_delivery.py .
 
 ---
 
-## 4. Mapa rápido de archivos para mostrar cuando te pidan evidencia
+## 5. Mapa rápido de archivos para mostrar cuando te pidan evidencia
 
 Cuando el profesor te pida ver un resultado específico, abre directamente estos archivos en VS Code:
 
@@ -210,7 +253,7 @@ Cuando el profesor te pida ver un resultado específico, abre directamente estos
 
 ---
 
-## 5. Preguntas y Respuestas Clave que debes dominar para la defensa
+## 6. Preguntas y Respuestas Clave que debes dominar para la defensa
 
 ### 1. ¿Qué cambios de diseño hicieron para pasar del Proyecto 2 (FPGA) al Proyecto 3 (ASIC)? (Actividad 3.1)
 - **Módulo superior `rtl/asic_top.v` sin primitivas de FPGA**: Expone solo las señales lógicas del juego (`clk_i`, `rst_ni`, `buttons_i[3:0]`, `leds_o[3:0]`, `segment1_o[6:0]`, `segment2_o[6:0]`, `spi_sclk_i`, `spi_mosi_i`, `spi_cs_ni`, `spi_miso_o`). Son terminales lógicos del macro digital, no pads de I/O con protección ESD ni buffers de potencia.
@@ -289,7 +332,7 @@ Cuando el profesor te pida ver un resultado específico, abre directamente estos
 
 ---
 
-## 6. Nota rápida si modificas algo durante la presentación
+## 7. Nota rápida si modificas algo durante la presentación
 
 Si durante la defensa el profesor te hace editar `config/rom_100_40.json`, `sw/game.s` o descomprimir un reporte y al terminar quieres dejar la carpeta otra vez idéntica al repositorio entregado en GitHub, solo ejecuta:
 ```powershell
