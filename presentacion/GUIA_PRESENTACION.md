@@ -39,13 +39,13 @@ Ahora que tu ruta (`C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\
 
 - **Si estás dentro de la pestaña de `nix-shell` en Ubuntu (Recomendado):**
   ```bash
-  klayout -nn /opt/lab3/pdks/gf180mcuD/libs.tech/klayout/tech/gf180mcu.lyt -l /opt/lab3/pdks/gf180mcuD/libs.tech/klayout/tech/gf180mcu.lyp /mnt/c/Users/anton/OneDrive/Escritorio/Lab3AdC/output/proyecto3/proyecto3_final/results/physical/rom_100_40/final/asic_top.gds
+  klayout -nn /opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.tech/klayout/tech/gf180mcu.lyt -l /opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.tech/klayout/tech/gf180mcu.lyp /mnt/c/Users/anton/OneDrive/Escritorio/Lab3AdC/output/proyecto3/proyecto3_final/results/physical/rom_100_40/final/asic_top.gds
   ```
 
 - **O si prefieres lanzarlo directo desde PowerShell:**
   ```powershell
   cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
-  wsl -d Ubuntu -u root -- bash -lc '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && cd /opt/lab3/librelane-linux && nix-shell --run "klayout -nn /opt/lab3/pdks/gf180mcuD/libs.tech/klayout/tech/gf180mcu.lyt -l /opt/lab3/pdks/gf180mcuD/libs.tech/klayout/tech/gf180mcu.lyp /mnt/c/Users/anton/OneDrive/Escritorio/Lab3AdC/output/proyecto3/proyecto3_final/results/physical/rom_100_40/final/asic_top.gds"'
+  wsl -d Ubuntu -u root -- bash -lc '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && export NIX_BUILD_SHELL=/bin/bash && cd /opt/lab3/librelane-linux && nix-shell --run "klayout -nn /opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.tech/klayout/tech/gf180mcu.lyt -l /opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.tech/klayout/tech/gf180mcu.lyp /mnt/c/Users/anton/OneDrive/Escritorio/Lab3AdC/output/proyecto3/proyecto3_final/results/physical/rom_100_40/final/asic_top.gds"'
   ```
 
 #### Cómo manejar KLayout frente al profesor:
@@ -54,8 +54,8 @@ Ahora que tu ruta (`C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\
 - **Ver el interior de las celdas estándar (transistores y ruteo interno)**: Presiona **`Shift + F`** (o menú superior `Display` → `Full Hierarchy`). Si solo se ven cajas vacías, `Shift + F` muestra todo el contenido.
 - **Prender/apagar capas de metal**: En el panel derecho (*Layers*), haz **doble clic** sobre cualquier capa para ocultarla o mostrarla (o clic derecho → *Hide All* y luego doble clic en la que quieras enseñar):
   - **`Metal1` (`34/0`)**: Rieles horizontales de alimentación (`VDD`/`VSS`) de las celdas estándar (`0.6 um`) y ruteo local.
-  - **`Metal2` (`36/0`) y `Metal3` (`42/0`)**: Ruteo de señales intermedias y pines de entrada/salida en los bordes del die.
-  - **`Metal4` (`46/0`, vertical) y `Metal5` (`81/0`, horizontal)**: *Straps* gruesos (`1.6 um`) de la red de distribución de potencia (PDN).
+  - **`Metal2` (`36/0`) y `Metal3` (`42/0`)**: Ruteo de señales intermedias y pines de entrada/salida en los bordes del die (`#N`: displays `segment1_o`/`segment2_o`, `#S`: `clk_i`/`rst_ni`, `#E`: `leds_o`/`buttons_i`, `#W`: interfaz SPI).
+  - **`Metal4` (`46/0`, vertical) y `Metal5` (`81/0`, horizontal)**: *Straps* gruesos (`1.6 um`, pitch ~`153.6 um` / `153.18 um`) de la red de distribución de potencia (PDN), con `PDN_CORE_RING=False` (sin anillo de pads).
 
 ---
 
@@ -69,7 +69,7 @@ Ahora que tu ruta (`C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\
   ```powershell
   wsl -d Ubuntu -u root -- bash -lc '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && cd /opt/lab3/librelane-linux && nix-shell --run "openroad -gui"'
   ```
-- **Nota útil**: Las corridas completas originales (con todas las bases de datos `.odb` de cada etapa intermedia) están guardadas dentro de Ubuntu en `/opt/lab3/design/config/runs/`. Puedes listarlas dentro de Ubuntu con:
+- **Nota útil**: En `results/physical/rom_100_40/final/asic_top.odb` está la base de datos OpenDB final dentro de tu repositorio, y las corridas completas originales (con todas las bases de datos `.odb` de cada etapa intermedia) están guardadas dentro de Ubuntu en `/opt/lab3/design/config/runs/`. Puedes listarlas dentro de Ubuntu con:
   ```bash
   ls -la /opt/lab3/design/config/runs/
   ```
@@ -78,28 +78,34 @@ Ahora que tu ruta (`C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\
 
 ### C. Abrir reportes de Timing comprimidos (`.rpt.gz`)
 
-En `results/physical/rom_100_40/reports/` los reportes extensos de STA están comprimidos en `.rpt.gz`. Si el profesor pide abrir uno en vivo (por ejemplo, el camino crítico de setup en el corner nominal `nom_tt_025C_5v00` o en el corner lento `max_ss_125C_4v50`):
+En `results/physical/rom_100_40/timing/55-openroad-stapostpnr/` están el resumen general (`summary.rpt`), las rutas críticas (`critical_paths.json`) y los reportes detallados comprimidos en `.rpt.gz` para tres corners (`nom_tt_025C_5v00`, `max_ss_125C_4v50` y `min_ff_n40C_5v50`). Si el profesor pide abrir uno en vivo:
 
-- **Ver las primeras 80 líneas directo en la terminal (PowerShell):**
+- **Ver las primeras 85 líneas directo en la terminal (PowerShell):**
   ```powershell
   cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
-  wsl -d Ubuntu -u root -- zcat results/physical/rom_100_40/reports/sta-rcx_nom/nom_tt_025C_5v00/max.rpt.gz | Select-Object -First 80
+  wsl -d Ubuntu -u root -- zcat results/physical/rom_100_40/timing/55-openroad-stapostpnr/max_ss_125C_4v50/max.rpt.gz | Select-Object -First 85
+  ```
+- **O para el corner nominal (`nom_tt_025C_5v00`):**
+  ```powershell
+  cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
+  wsl -d Ubuntu -u root -- zcat results/physical/rom_100_40/timing/55-openroad-stapostpnr/nom_tt_025C_5v00/max.rpt.gz | Select-Object -First 85
   ```
 - **O descomprimirlo conservando el `.gz` (`-dk`) y abrirlo en VS Code:**
   ```powershell
   cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
-  wsl -d Ubuntu -u root -- gzip -dk results/physical/rom_100_40/reports/sta-rcx_nom/nom_tt_025C_5v00/max.rpt.gz
-  code results/physical/rom_100_40/reports/sta-rcx_nom/nom_tt_025C_5v00/max.rpt
+  wsl -d Ubuntu -u root -- gzip -dk results/physical/rom_100_40/timing/55-openroad-stapostpnr/max_ss_125C_4v50/max.rpt.gz
+  code results/physical/rom_100_40/timing/55-openroad-stapostpnr/max_ss_125C_4v50/max.rpt
   ```
+  *(Nota: recuerda borrar luego el archivo `.rpt` descomprimido con `Remove-Item results/physical/rom_100_40/timing/55-openroad-stapostpnr/max_ss_125C_4v50/max.rpt` para mantener limpio el árbol de entrega).*
 
 ---
 
 ## 3. ¿Qué nos van a pedir hacer o cambiar en vivo?
 
-Según la sección 5 del enunciado (`Proyecto_3_arquitectura.pdf`):
-> *"Durante la sesión de presentación se les pedirá mostrar los layouts generados y los reportes de las distintas etapas, junto con responder preguntas sobre las decisiones de diseño tomadas y los resultados obtenidos. También se les podrá pedir modificar parámetros de la configuración y ejecutar partes o la totalidad del flujo en vivo."*
+Según el enunciado (`Proyecto_3_arquitectura.pdf`):
+> *"Durante la defensa se harán preguntas sobre cualquier parte del informe, del RTL y del assembler. Todos los integrantes deben poder responder."*
 
-Aquí tienes los **4 ejercicios en vivo** que te pueden pedir y cómo resolverlos al instante:
+Aquí tienes los **5 ejercicios en vivo** que te pueden pedir y cómo resolverlos al instante:
 
 ### Ejercicio en vivo 1: "Modifiquen el período de reloj (`CLOCK_PERIOD`) o la utilización (`FP_CORE_UTIL`) y ejecuten LibreLane"
 1. En VS Code, abre `config/rom_100_40.json`.
@@ -113,7 +119,7 @@ Aquí tienes los **4 ejercicios en vivo** que te pueden pedir y cómo resolverlo
    ```powershell
    wsl -d Ubuntu -u root -- bash tools/run_wsl.sh 'librelane --pdk gf180mcuD --run-tag demo_vivo config/rom_100_40.json'
    ```
-   *(El script `tools/run_wsl.sh` copia automáticamente tus carpetas `rtl`, `sw`, `tools`, `tests`, `config` desde Windows hacia `/opt/lab3/design` en Linux y lanza LibreLane dentro de `nix-shell`. La arquitectura ROM tarda solo ~3 a 4 minutos en completar las 63 etapas).*
+   *(El script `tools/run_wsl.sh` copia automáticamente tus carpetas `rtl`, `sw`, `tools`, `tests`, `config` desde Windows hacia `/opt/lab3/design` en Linux y lanza LibreLane dentro de `nix-shell`. La arquitectura ROM tarda solo ~3 a 4 minutos en completar el flujo).*
 
 ---
 
@@ -124,7 +130,7 @@ Aquí tienes los **4 ejercicios en vivo** que te pueden pedir y cómo resolverlo
      "Unified=0"
    ],
    ```
-   - Con `Unified=0` (`config/rom_100_40.json`), el módulo `rtl/generated/asic_memory.v` sintetiza las 99 palabras del programa como una **ROM combinacional** con salida registrada más **1 palabra de RAM** en `0x18c`.
+   - Con `Unified=0` (`config/rom_100_40.json`), el módulo `rtl/generated/asic_memory.v` sintetiza las 99 palabras del programa como una **ROM combinacional** con salida registrada más **1 palabra de RAM** de reserva en `0x18c`.
    - Con `Unified=1` (`config/ffq_100_40.json`), sintetiza las **100 palabras completas de 32 bits como bancos de Flip-Flops** inicializados por reset (`rst_ni`) y escribibles por byte.
 2. Si te piden lanzar la corrida de Flip-Flops en vivo:
    ```powershell
@@ -134,15 +140,27 @@ Aquí tienes los **4 ejercicios en vivo** que te pueden pedir y cómo resolverlo
 ---
 
 ### Ejercicio en vivo 3: "Cambien una constante o instrucción en el programa RISC-V (`sw/game.s`) y regeneren la memoria"
-Si te preguntan cómo se traduce el programa assembler a hardware sin usar `$readmemh`:
-1. Abre `sw/game.s` y muestra las constantes del juego (líneas iniciales: `WAIT`, `TENTH`, `HOLD`, `RELEASE`).
+Si te preguntan cómo se traduce el programa assembler a hardware sin usar `$readmemh` o cómo se recalculan las constantes del juego para el reloj objetivo ($N = t / T$):
+1. Abre `sw/game.s` y muestra las líneas 2 a 5:
+   ```asm
+   .equ WAIT_CYCLES, 30000000
+   .equ TENTH_CYCLES, 1000000
+   .equ HOLD_CYCLES, 10000000
+   .equ RELEASE_CYCLES, 200000
+   ```
+   - Explica el cálculo para $T = 100\text{ ns}$ ($10\text{ MHz}$):
+     - `WAIT_CYCLES` ($3\text{ s}$): $3\text{ s} / 100\text{ ns} = 30,000,000\text{ ciclos}$.
+     - `TENTH_CYCLES` ($0.1\text{ s}$): $0.1\text{ s} / 100\text{ ns} = 1,000,000\text{ ciclos}$.
+     - `HOLD_CYCLES` ($1\text{ s}$): $1\text{ s} / 100\text{ ns} = 10,000,000\text{ ciclos}$.
+     - `RELEASE_CYCLES` ($0.02\text{ s}$): $0.02\text{ s} / 100\text{ ns} = 200,000\text{ ciclos}$.
+   - *(Si el profesor te pide calcularlas para otro período $T$, por ejemplo $T = 80\text{ ns}$ ($12.5\text{ MHz}$), divides cada tiempo entre $80\text{ ns}$: `WAIT_CYCLES = 37500000`, `TENTH_CYCLES = 1250000`, `HOLD_CYCLES = 12500000`, `RELEASE_CYCLES = 250000`).*
 2. Ejecuta desde PowerShell el ensamblador y generador de hardware:
    ```powershell
    cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
    python tools/assembler.py sw/game.s sw/game.hex --asic-output rtl/generated
    ```
-3. Abre `rtl/generated/asic_memory.v` para mostrar cómo se regeneró la tabla `case` de la ROM y los valores de reset de los Flip-Flops con el nuevo código máquina.
-4. Puedes correr además los tests unitarios del ensamblador y del diseño:
+3. Abre `rtl/generated/asic_memory.v` y `rtl/generated/program.json` para mostrar cómo se regeneró la tabla `case` de la ROM, los valores de reset de los Flip-Flops y el manifiesto con el conteo de palabras y hash SHA-256.
+4. Corre además los tests unitarios del ensamblador:
    ```powershell
    python -m unittest discover -s tests -v
    ```
@@ -155,7 +173,17 @@ Para demostrar que el netlist sintetizado con compuertas reales del PDK `gf180mc
 cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
 wsl -d Ubuntu -u root -- bash tools/run_wsl.sh 'bash tools/run_mapped_wsl.sh'
 ```
-Esto sintetiza el SoC con Yosys hacia celdas GF180, compila con `iverilog` junto a los modelos funcionales de `primitives.v` y `gf180mcu_fd_sc_mcu7t5v0.v`, y simula los **89,186 ciclos** completos del juego (error de botón, 10 rondas válidas, cálculo del promedio y reinicio), verificando equivalencia exacta con el RTL y comprobando que el primer tiempo de reacción capturado en `elapsed_q` es **1,503 ciclos** en ambos.
+*(Y si piden la de memoria unificada FF: `wsl -d Ubuntu -u root -- bash tools/run_wsl.sh 'bash tools/run_mapped_ff_wsl.sh'`).*
+Esto sintetiza el SoC con Yosys hacia celdas GF180 (usando constantes acortadas de simulación: `WAIT=3000`, `TENTH=1000`, `HOLD=2000`, `RELEASE=200`), compila con `iverilog` junto a `primitives.v` y `gf180mcu_fd_sc_mcu7t5v0.v`, y simula los **89,186 ciclos** completos del juego (error de botón con máscara 15 mostrando `EE` y repitiendo ronda, 10 rondas válidas, cálculo del promedio y reinicio), comprobando directamente el registro `elapsed_q` en RTL y en los bits preservados del netlist (`tests/gf180_elapsed.vh`), donde el primer acierto captura exactamente **1,503 ciclos** en ambos.
+
+---
+
+### Ejercicio en vivo 5: "Validen la integridad completa de la entrega"
+Para verificar instantáneamente los 364 archivos del paquete, sus hashes SHA-256, los 9 corners de las corridas de referencia y las trazas de 89,186 ciclos:
+```powershell
+cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
+python tools/validate_delivery.py .
+```
 
 ---
 
@@ -165,74 +193,105 @@ Cuando el profesor te pida ver un resultado específico, abre directamente estos
 
 | Qué te pide el profesor | Archivo exacto a abrir en `proyecto3_final` |
 |---|---|
-| **Métricas finales del chip ganador (`rom_100_40`)** | `results/physical/rom_100_40/metrics.json` |
+| **Auditoría de dependencias FPGA (Act. 3.1)** | `results/fpga_audit.log` (líneas 10-14 y 26-30: `%Error-MODMISSING: SB_RAM40_4K`) |
+| **Métricas finales del chip ganador (`rom_100_40`)** | `results/physical/rom_100_40/latest_state.json` |
 | **Resumen comparativo de las 16 corridas (ROM vs FF, frecuencias, áreas)** | `results/physical/summary.json` |
-| **Cantidad de celdas y área de síntesis (Yosys)** | `results/physical/rom_100_40/synthesis/stat.rpt` y `stat.json` |
-| **Área desglosada por submódulo (`u_rf`, `u_alu`, `u_cycle_counter`, memoria)** | `results/synthesis_breakdown.json` |
-| **Reporte Magic DRC (`0` violaciones)** | `results/physical/rom_100_40/reports/magic_drc.rpt` |
-| **Reporte Netgen LVS (`Circuits match uniquely`, `0` errores)** | `results/physical/rom_100_40/reports/netgen_lvs.rpt` |
-| **Evidencia de la violación de antena en `mosi_sync[0]` y su reparación** | `results/antenna_incident.json` y `results/layout/antenna_fix.png` |
-| **Capturas del layout con bloques resaltados (RF, ALU, Contador, PDN)** | Carpeta `results/layout/` (`highlight_register_file.png`, `highlight_alu.png`, `highlight_cycle_counter.png`, `pdn_detail.png`) |
-| **Verificación post-síntesis GF180 (ROM y FF)** | `results/mapped_verification.json` y `results/mapped_verification_ff.json` |
-| **Comparación de arquitectura de ALU (Ripple-Carry vs Carry-Select)** | `results/alu_comparison.json` |
+| **Cantidad de celdas y área de síntesis (Yosys)** | `results/physical/rom_100_40/synthesis/stat.rpt` y `results/physical/rom_100_40/synthesis/stat.json` |
+| **Área desglosada por submódulo y Top 5 celdas (`u_rf`, `u_alu`, `u_cycle_counter`, memoria)** | `results/physical/rom_100_40/synthesis/area_analysis.json` y `results/physical/ffq_100_40/synthesis/area_analysis.json` |
+| **Resumen STA multicorner y ruta crítica post-PnR** | `results/physical/rom_100_40/timing/55-openroad-stapostpnr/summary.rpt` y `critical_paths.json` |
+| **Reporte Magic DRC (`0` violaciones)** | `results/physical/rom_100_40/signoff/64-magic-drc/reports/drc.magic.rpt` (y `magic-drc.log`) |
+| **Reporte Netgen LVS (`Circuits match uniquely`, `0` errores)** | `results/physical/rom_100_40/signoff/70-netgen-lvs/reports/lvs.netgen.rpt` (y `netgen-lvs.log`) |
+| **Reportes de Antena (antes y después de reparar)** | `results/physical/rom_100_40/signoff/40-openroad-checkantennas/reports/antenna_summary.rpt` (antes) y `46-openroad-checkantennas-1/reports/antenna_summary.rpt` (después) |
+| **Evidencia de la violación de antena en `mosi_sync[0]` y su reparación** | `results/antenna_incident.json` y `results/layout/antena_corregida.png` |
+| **Capturas del layout con bloques resaltados (RF, ALU, Contador)** | Carpeta `results/layout/` (`register_file.png`, `alu.png`, `contador.png`) y `results/physical/rom_100_40/final/asic_top.png` |
+| **Gráfico de utilización vs. congestión de ruteo** | `results/plots/utilizacion_congestion.png` y `results/plots/plot_data.json` |
+| **Verificación post-síntesis GF180 (ROM y FF)** | `results/mapped_verification.json` y `results/mapped_verification_ff.json` (logs en `results/rtl_game.log` y `results/mapped_game.log`) |
+| **Comparación de arquitectura de ALU (Referencia vs Carry-Select)** | `results/physical/rom_fast_100_40/synthesis/area_analysis.json`, `results/physical/rom_fast_100_40/latest_state.json`, `results/alu_False.log` y `results/alu_True.log` |
 
 ---
 
 ## 5. Preguntas y Respuestas Clave que debes dominar para la defensa
 
-### 1. ¿Qué cambios de diseño hicieron para pasar del Proyecto 2 (FPGA) al Proyecto 3 (ASIC)?
-- **Eliminación de divisor de reloj / PLL**: En FPGA entraba un reloj de 50 MHz y se dividía a 10 MHz. En ASIC (`rtl/asic_top.v`) entra directamente el reloj `clk_i` a **10 MHz (`100 ns`)**, lo que simplifica la síntesis del árbol de reloj (CTS) a un único dominio síncrono.
-- **Reset explícito en todos los registros**: En FPGA los registros pueden iniciar con `initial`. En un ASIC los Flip-Flops encienden en estado indeterminado (`X`), por lo que todos los elementos secuenciales usan reset activo bajo (`rst_ni`).
-- **Reemplazo de `$readmemh` por memoria sintetizable en celdas estándar**: Como no se usa OpenRAM ni bloques BRAM de FPGA, diseñamos un generador en `tools/assembler.py` que produce `rtl/generated/asic_memory.v` con dos modos seleccionables por parámetro `Unified`:
-  - **`Unified=0` (ROM + RAM mínima)**: Las 99 instrucciones (396 bytes) se implementan como lógica combinacional constante con registro de salida, y 1 palabra de RAM en `0x18c`. Todas las variables del juego viven en registros de la CPU y las E/S se hacen por MMIO en `0x80000000`.
-  - **`Unified=1` (Memoria Unificada FF)**: Las 100 palabras de 32 bits se sintetizan en Flip-Flops con escritura por byte y se cargan con las instrucciones del programa durante el pulso de reset (`rst_ni == 0`).
+### 1. ¿Qué cambios de diseño hicieron para pasar del Proyecto 2 (FPGA) al Proyecto 3 (ASIC)? (Actividad 3.1)
+- **Módulo superior `rtl/asic_top.v` sin primitivas de FPGA**: Expone solo las señales lógicas del juego (`clk_i`, `rst_ni`, `buttons_i[3:0]`, `leds_o[3:0]`, `segment1_o[6:0]`, `segment2_o[6:0]`, `spi_sclk_i`, `spi_mosi_i`, `spi_cs_ni`, `spi_miso_o`). Son terminales lógicos del macro digital, no pads de I/O con protección ESD ni buffers de potencia.
+- **Primitiva `SB_RAM40_4K` en el Register File**: Al correr la auditoría del RTL original (`results/fpga_audit.log`, líneas 10-14 y 26-30), Verilator/LibreLane se detuvo en la etapa 1 (`Verilator.Lint`) con 2 errores `%Error-MODMISSING: Cannot find file containing module: 'SB_RAM40_4K'` (líneas 22 y 33 del register file original de iCE40). Se reemplazó en `rtl/espino_core/espino_register_file.v` por un banco de **15 registros de 32 bits en Flip-Flops** (`x1`..`x15`, con `x0` cableado a 0) y **dos puertos de lectura registrados** para mantener exactamente la latencia de 1 ciclo que espera el núcleo Espino.
+- **Bloques `initial` y `$readmemh`**: No produjeron un mensaje separado en `fpga_audit.log` porque el flujo abortó antes en el lint por `SB_RAM40_4K`, pero en silicio real no existe un archivo `.hex` que cargue los flip-flops o SRAM al encender. Se reemplazaron generando hardware explícito en `rtl/generated/asic_memory.v` desde `tools/assembler.py`.
+- **Power-On Reset (`por_cnt = 0`) y Reset explícito**: En FPGA un contador inicializado con `initial` generaba el reset interno; en ASIC los FFs despiertan en estado aleatorio (`X`), por lo que se eliminó `por_cnt` y se expuso `rst_ni` activo bajo para todos los FFs del diseño (manteniéndolo activo al menos 5 ciclos y liberándolo sincronizado).
+- **Reloj y constantes del software**: En el Proyecto 2 el reloj efectivo del SoC era de 25 MHz; para el objetivo ASIC de `CLOCK_PERIOD = 100 ns` (**10 MHz**), no es un error de LibreLane sino un supuesto temporal del software, por lo que recalculamos las constantes en `sw/game.s`.
 
-### 2. ¿Por qué eligieron la estrategia ROM (`rom_100_40`) sobre la de Flip-Flops (`ffq_100_40`)?
-- **Área de síntesis 3.65x menor**:
-  - `rom_100_40`: **`163,731.19 um²`** de área de celdas, **`13,205` celdas** en total y solo **`914` Flip-Flops**.
-  - `ffq_100_40`: **`597,386.36 um²`** de área de celdas y **`4,083` Flip-Flops** (3,200 FFs adicionales solo para almacenar las 100 palabras de 32 bits, más una enorme red de multiplexores 100:1 de lectura y decodificadores de escritura).
-- **Ruteabilidad y congestión**: En la memoria FF, el alto *fan-out* y *fan-in* de los 3,200 Flip-Flops hacía colapsar el ruteo global cuando OpenROAD usaba su densidad automática de placement (`73.15%`). Para que la versión FF lograra cerrar DRC/LVS hubo que agregar *cell padding* de 4 sitios (`GPL_CELL_PADDING = DPL_CELL_PADDING = 4`) y fijar `PL_TARGET_DENSITY_PCT = 60` (`ffq_100_40`), resultando en un die de **`1,605,636 um²`** frente a solo **`438,409 um²`** de la versión ROM.
+### 2. ¿Cómo determinaron cuántas palabras de instrucciones y datos usa el juego, y por qué eligieron ROM sobre Flip-Flops? (Actividad 3.2)
+- **Conteo real de palabras (`99` de instrucciones y `0` de RAM de datos usadas)**:
+  - Al ensamblar `sw/game.s`, `tools/assembler.py` genera exactamente **99 instrucciones de 32 bits** (396 bytes, cumpliendo ampliamente el límite recomendado de 256 palabras).
+  - En `sw/game.s` (línea 8), el registro `x2` se carga una sola vez con `lui x2, 0x80000` (`0x80000000`) y todos los `lw`/`sw` del programa usan desplazamientos sobre `x2` (`0(x2)` displays, `4(x2)` LEDs, `8(x2)` botones, `12(x2)` contador de ciclos, `16(x2)` inicio, `20(x2)` `elapsed_q`, `24(x2)` captura de evento). No existe stack (`sp`) ni variables en RAM; todo el estado vive en los registros `x1`..`x15`. Por tanto, el juego usa **0 palabras de RAM de datos**, y reservamos **1 palabra de RAM en `0x18c`** (dentro del límite de 64 palabras) para ejercitar y verificar el camino de lectura/escritura a memoria.
+- **Comparación ROM (`rom_100_40`, `Unified=0`) vs. Memoria Unificada FF (`ffq_100_40`, `Unified=1`)**:
+  - **Área de síntesis 3.65x menor**:
+    - `rom_100_40`: **`163,731.19 um²`** de área de celdas mapeadas, **`5,938` celdas** en síntesis (`22,709` instancias físicas finales en el die incluyendo fillers/taps/buffers) y solo **`914` Flip-Flops** (`95` FFs en `u_ram` + `819` FFs en el resto del SoC).
+    - `ffq_100_40`: **`597,386.36 um²`** de área de celdas mapeadas, **`17,490` celdas** en síntesis y **`4,083` Flip-Flops** (`3,264` FFs en `u_ram`: 3,200 bits de almacenamiento para las 100 palabras + 64 bits de respuesta registrada).
+  - **Utilización lógica y Fmáx verificada**:
+    - `rom_100_40`: **47.79 %** de ocupación lógica final y **15.873 MHz** (`63 ns`) de frecuencia máxima verificada en los 9 corners.
+    - `ffq_100_40`: **50.64 %** de ocupación lógica final y **10.000 MHz** (`100 ns`) de frecuencia máxima verificada.
+  - **Ruteabilidad y congestión en FF**: En la memoria FF sin padding (`ff_100_40`) hubo conflictos persistentes de ruteo detallado; con padding de 4 sitios (`ffp_100_40`, `GPL_CELL_PADDING = DPL_CELL_PADDING = 4`), la densidad automática de placement subió a `73.15 %` y falló por congestión global. En `ffq_100_40` fijamos además `PL_TARGET_DENSITY_PCT = 60` (distinto de `FP_CORE_UTIL = 40%`), logrando cerrar DRC=0, LVS=0 y Antena=0 en un die de **`1,548,640 um²`** frente a solo **`438,409 um²`** de la versión ROM.
 
-### 3. ¿Cuánto mide el chip final y cuál es su costo estimado?
-- **Corrida final**: `rom_100_40` (`CLOCK_PERIOD = 100 ns` = 10 MHz, `FP_CORE_UTIL = 40%`).
-- **Área de celdas estándar (síntesis)**: `163,731.19 um²`.
-- **Área total del die**: **`438,409 um²`** (`0.438409 mm²`, ~`662.12 um x 662.12 um`).
-- **Costo estimado**: Usando la relación del enunciado ($\text{Área en mm}^2 \times \text{US\$ } 23,000/\text{mm}^2$), el costo equivalente de silicio es **$\text{US\$ } 10,083.41$** (mientras que el die de la versión FF costaría **$\text{US\$ } 36,929.63$**).
+### 3. ¿Cuáles son las 5 celdas más usadas en síntesis y cómo se distribuye el área por módulo? (Actividad 3.3)
+- **Top 5 celdas estándar en `rom_100_40`** (`results/physical/rom_100_40/synthesis/area_analysis.json`):
+  1. **`dffrnq_1` (`911` instancias)**: Flip-Flops D con reset asíncrono activo bajo; implementan los 15 registros del `register_file` (`480`), registros del periférico (`216`), memoria/lectura (`95`), etapa IF (`66`), SPI (`51`) y control (`3`). *(Además hay `3` celdas `dffsnq_1` con set activo bajo, sumando los `914` FFs totales).*
+  2. **`nand2_1` (`902` instancias)**: Compuertas NAND de 2 entradas; dominan en la decodificación combinacional de la ROM y RAM (`u_ram`: `476`), banco de registros (`144`) y periférico (`119`).
+  3. **`mux2_2` (`710` instancias)**: Multiplexores 2:1; concentrados masivamente en `u_rf` (`650` de `710`) para los árboles de lectura de los dos puertos del banco de registros y habilitación de escritura.
+  4. **`aoi22_1` (`553` instancias)**: Celdas complejas AND-OR-Invert; usadas en la selección de lectura/escritura del `register_file` (`345`), ALU (`67`) y memoria (`57`).
+  5. **`nor2_1` (`352` instancias)**: Compuertas NOR de 2 entradas; usadas en decodificación de direcciones y comparaciones en `u_ram` (`121`), periférico (`76`) y ALU (`72`).
+- **Desglose jerárquico de área en síntesis (`163,731.19 um²` total)**:
+  - **Core completo (`u_soc.u_core`)**: **`105,600.10 um²`** (**64.50 %** del total).
+  - **Register File (`u_soc.u_core.u_rf`)**: **`71,587.67 um²`** (**43.72 %** del total) — es el submódulo individual que aporta más área en la arquitectura ROM porque almacena 15x32 bits en FFs con doble puerto de lectura registrado.
+  - **Memoria (`u_soc.u_ram`)**: **`25,815.55 um²`** (**15.77 %** del total).
+  - **Periférico completo (`u_soc.u_periph`)**: **`23,242.78 um²`** (**14.20 %** del total).
+  - **ALU (`u_soc.u_core.u_id.u_alu`)**: **`10,152.80 um²`** (**6.20 %** del total).
+  - **Contador de ciclos (`u_soc.u_periph.u_cycle_counter`)**: **`3,942.58 um²`**, lo que representa apenas el **2.41 %** (`2.408 %`) del área total de síntesis (solo 32 FFs y su sumador `+1`, sin dominar el área del chip).
 
-### 4. ¿Cuál es la frecuencia máxima verificada y cómo aseguraron el cierre de Timing en los 9 corners?
-- Por defecto, la configuración base del PDK `gf180mcuD` en LibreLane solo revisaba violaciones de setup en los corners típicos (`*tt*`). Nosotros agregamos explícitamente en los JSON:
-  ```json
-  "TIMING_VIOLATION_CORNERS": ["*"],
-  "SETUP_VIOLATION_CORNERS": ["*"],
-  "HOLD_VIOLATION_CORNERS": ["*"]
-  ```
-  para exigir cierre simultáneo en los **9 corners** (`min/nom/max` de extracción RC parasítica cruzados con `tt_025C_5v00`, `ss_125C_4v50` y `ff_n40C_5v50`).
-- En la corrida final `rom_100_40` (10 MHz):
-  - **WNS = 0.0 ns** y **TNS = 0.0 ns** en setup y hold en los 9 corners.
-  - **Peor slack de setup**: **`+37.342553 ns`** (ocurre en el corner más lento `max_ss_125C_4v50`, a 125 °C y 4.5 V).
-  - **Peor slack de hold**: **`+0.171039 ns`** (ocurre en los corners rápidos `ff_n40C_5v50`, a -40 °C y 5.5 V).
-- **Frecuencia máxima verificada en el barrido**: Probamos períodos decrecientes (`100, 80, 75, 70, 68, 66, 65, 63, 60 ns`). La menor corrida con flujo completo, DRC=0, LVS=0, Antena=0 y WNS=0 en **todos los 9 corners** es **`rom_63_40` (`63 ns` = `15.873 MHz`)**, con slack mínimo de setup de `+0.0445 ns` en `max_ss_125C_4v50`. A `60 ns` (`16.67 MHz`), el corner típico pasaba (`+12.70 ns`), pero el corner lento `ss_125C_4v50` fallaba con `-1.454 ns`, demostrando por qué no basta mirar solo el corner nominal ni extrapolar con $1/(T - \text{slack})$.
+### 4. ¿Cuál es la frecuencia máxima verificada, cómo cerraron los 9 corners y cuál es la ruta crítica? (Actividad 3.4)
+- **Cierre en los 9 corners**: Por defecto el PDK `gf180mcuD` en LibreLane solo verificaba setup en `*tt*`. Añadimos `"TIMING_VIOLATION_CORNERS": ["*"]`, `"SETUP_VIOLATION_CORNERS": ["*"]` y `"HOLD_VIOLATION_CORNERS": ["*"]` para exigir `WNS >= 0` y `TNS = 0` en los **9 corners** (`min/nom/max` RC cruzados con `tt_025C_5v00`, `ss_125C_4v50` y `ff_n40C_5v50`).
+- **Resultados de `rom_100_40` (10 MHz)**:
+  - **Corner típico (`nom_tt_025C_5v00`)**: Setup WS = **`+67.130 ns`** (`WNS = 0`, `TNS = 0`); Hold WS = **`+0.437 ns`** (`WNS = 0`, `TNS = 0`).
+  - **Corner lento (`max_ss_125C_4v50`, 125 °C y 4.5 V)**: Setup WS = **`+37.343 ns`** (`37.342553 ns`, el peor setup de los 9 corners, `WNS = 0`, `TNS = 0`); Hold WS = **`+1.060 ns`**.
+  - **Peor Hold global (`min_ff_n40C_5v50`, -40 °C y 5.5 V)**: Hold WS = **`+0.171 ns`** (`0.171039 ns`, `WNS = 0`, `TNS = 0`).
+- **Barrido de `CLOCK_PERIOD` y Fmáx verificada**:
+  - Probamos `100, 80, 63, 62, 60, 40, 30 ns` en ROM.
+  - A **`63 ns` (`rom_63_40` = `15.873 MHz`)** el diseño cierra completamente en los 9 corners con Setup WS = **`+0.343 ns`** (`0.342560 ns`) en `max_ss_125C_4v50` y `+30.130 ns` en `nom_tt_025C_5v00`.
+  - A **`62 ns` (`rom_62_40` = `16.129 MHz`)** el corner típico pasa holgado (`+29.130 ns`), pero el corner lento `max_ss_125C_4v50` falla con **`WNS = -0.657 ns`** y **`TNS = -4.349 ns`** (y a `60 ns` falla con `WNS = -2.657 ns`, `TNS = -48.638 ns`). Cada período dispara una nueva optimización, buffering y placement en OpenROAD.
+- **Ruta crítica exacta en `rom_100_40` (`max_ss_125C_4v50`)**:
+  - **Celda de inicio**: `u_soc.u_ram._2300_` (`dffrnq_1`, pin `Q`, señal de instrucción registrada `u_soc.instr_rdata[1]`, etapa **fetch**).
+  - **Recorrido microarquitectónico**: Pasa por **decode** (`u_soc.u_core.u_id.u_decoder`), selección de operandos en `u_id` (`operand_a[1]`), **ejecución en la ALU** (`u_soc.u_core.u_id.u_alu`) donde propaga el acarreo hasta formar el bit 31 de la dirección de **acceso a memoria** (`lsu_addr[31]`), atraviesa la decodificación MMIO y control del periférico (`u_soc.u_periph`), y llega a la captura de tiempo.
+  - **Celda de fin**: `u_soc.u_periph._1280_` (`dffrnq_1`, pin `D`, correspondiente al registro `elapsed_q[18]`), con slack **`+37.342553 ns`**.
+- **Cambio al RTL propuesto y evaluado (`rom_fast_100_40`)**:
+  - Implementamos en `rtl/espino_core/espino_alu.v` una suma **Carry-Select por bloques de 8 bits** (`ASIC_FAST_ADD=1`) para acelerar la propagación de acarreo hacia `lsu_addr[31]`.
+  - **Resultado**: El área de síntesis bajó levemente de `163,731.19 um²` a **`163,671.92 um²`** (`-0.04 %`, mismo die de `438,256` / `438,409 um²`), pero el peor slack de setup en `max_ss_125C_4v50` pasó de **`37.343 ns` a `35.564 ns`** (`-1.778 ns`). Como la ruta crítica incluye decode, selección de operandos y lógica MMIO, y ABC ya optimiza bien el sumador de 32 bits, duplicar bloques con muxes de selección agregó carga y empeoró el slack global. Por eso conservamos la ALU de referencia.
 
-### 5. ¿Cuál es el camino crítico (Critical Path) del procesador?
-- Parte del registro de instrucción / estado de la etapa IF (`u_soc.u_core.u_if.instr_rdata_q`) y lectura de operandos en el banco de registros (`u_rf`), atraviesa la decodificación y la cadena aritmética/comparación de la **ALU (`u_alu`)** para resolver saltos condicionales (`branch_taken_w`), actualiza la lógica de próximo PC (`pc_next`) y llega al registro de dirección/PC en la etapa de búsqueda.
+### 5. ¿Cómo exploraron el Floorplan (`FP_CORE_UTIL`), los pines, la PDN y el costo del chip? (Actividad 3.5)
+- **Barrido de utilización (`rom_100_30`, `rom_100_40`, `rom_100_50`, `rom_100_60`)**:
+  - `30 %`: Ocupación lógica `35.90 %`, área de die **`579,292 um²`**, `191` violaciones DRC en iteración 0 del ruteo detallado, cierre final **Sí** (DRC final = 0).
+  - `40 %` (**elegida por enunciado**): Ocupación lógica `47.79 %`, área de die **`438,409 um²`** (`0.438409 mm²`, bbox `653.225 um x 671.145 um`), `95` violaciones DRC en iteración 0, cierre final **Sí**.
+  - `50 %`: Ocupación lógica `59.98 %`, área de die **`353,522 um²`**, `46` violaciones DRC en iteración 0, cierre final **Sí**.
+  - `60 %`: Ocupación lógica `71.53 %`, área de die **`296,710 um²`** (**menor área con cierre completo en el barrido**), pero las violaciones DRC iniciales en la iteración 0 del ruteador detallado se disparan a **`3,618`** (ver gráfica `results/plots/utilizacion_congestion.png`), evidenciando el fuerte aumento de congestión inicial aunque el ruteador logre resolverlas en iteraciones posteriores.
+- **Ubicación de terminales (`config/pins.cfg`)**:
+  - **Sur (`#S`)**: `clk_i` y `rst_ni` (entradas globales de sincronía y reset).
+  - **Oeste (`#W`)**: `spi_sclk_i`, `spi_mosi_i`, `spi_cs_ni`, `spi_miso_o` (bus serial agrupado hacia el maestro externo).
+  - **Este (`#E`)**: `leds_o[3:0]` y `buttons_i[3:0]` (interfaz de estímulo/respuesta rápida de rondas).
+  - **Norte (`#N`)**: `segment1_o[6:0]` y `segment2_o[6:0]` (14 líneas de salida hacia los dos displays de 7 segmentos).
+- **Costo estimado y sus limitaciones**:
+  - Usando el área de die final (`0.438409 mm²`) y la relación lineal del ejercicio ($\text{US\$ } 23,000/\text{mm}^2$):
+    $$\text{Costo ROM} = 0.438409\text{ mm}^2 \times \text{US\$ } 23,000/\text{mm}^2 = \text{US\$ } 10,083.41$$
+  - En cambio, la versión de memoria unificada con Flip-Flops (`ffq_100_40`, die de `1,548,640 um²` = `1.548640 mm²`) tendría un costo equivalente de **$\text{US\$ } 35,618.72$** ($3.53\times$ más caro).
+  - **Limitaciones**: En fabricación real el costo no escala solo con el área del macro lógico; faltan el anillo de pads de I/O (que a menudo domina en diseños pequeños *pad-limited*), encapsulado, pruebas (testing), costos fijos de máscaras/shuttle MPW y el rendimiento (*yield*, que cae exponencialmente en dies grandes). La decisión con mayor impacto en el área y costo fue elegir **ROM sobre memoria unificada en Flip-Flops**.
 
-### 6. ¿Qué pasó con las verificaciones físicas (DRC, LVS y Efecto Antena)?
-- **Magic DRC**: **`0` violaciones** geométricas.
-- **Netgen LVS**: **`0` errores** (*Circuits match uniquely* entre el layout extraído y el netlist Verilog).
-- **Efecto Antena**: En el chequeo inicial de ruteo apareció **1 violación de antena** en la red de entrada `mosi_sync[0]` (ratio de área de metal a poli de **`460.48`** frente al máximo permitido de **`400`** por el PDK), causada por el trazo largo desde el pin `spi_mosi_i` hasta la compuerta del primer flip-flop sincronizador. El flujo reparó la red insertando automáticamente un diodo de protección `gf180mcu_fd_sc_mcu7t5v0__antenna` (`ANTENNA_1`) junto al flip-flop receptor, dejando el chequeo final en **`0` violaciones**.
-
-### 7. ¿Cómo identificaron dónde quedaron el Register File, la ALU y el Contador de Ciclos en el layout?
-- Configuramos `"SYNTH_HIERARCHY_MODE": "deferred_flatten"` en LibreLane. Así Yosys conserva los prefijos jerárquicos de cada instancia (`u_soc.u_core.u_rf.*`, `u_soc.u_core.u_id.u_alu.*`, `u_soc.u_periph.u_cycle_counter.*`) en el netlist y en la base de datos física OpenDB (`.odb`).
-- Con `tools/analyze_synthesis.py` y `tools/render_layout.py` extrajimos las coordenadas exactas de cada instancia desde OpenDB (`results/layout/layout_cells.json`) y las superpusimos sobre el GDSII real en KLayout:
-  - **Banco de registros (`u_rf`)**: `66,356.04 um²` (40.53% del área de celdas, el bloque más grande del núcleo).
-  - **ALU (`u_alu`)**: `9,426.33 um²` (5.76% del área de celdas). Probamos también una variante Carry-Select (`results/alu_comparison.json`), pero como a 100 ns empeoraba levemente el slack global (`35.94 ns` vs `37.34 ns`), mantuvimos la ALU de referencia.
-  - **Contador de ciclos (`u_cycle_counter`)**: `3,489.69 um²` (2.13% del área de celdas).
+### 6. ¿Qué pasó con las verificaciones físicas (DRC, LVS y Efecto Antena)? (Actividad 3.6)
+- **Magic DRC**: **`0` violaciones** (`results/physical/rom_100_40/signoff/64-magic-drc/reports/drc.magic.rpt`). *(Nota: el PDK no incluye un runset de KLayout DRC en esta configuración, por lo que el signoff DRC acreditado es Magic, mientras KLayout realiza stream-out, render y XOR=0).*
+- **Netgen LVS**: **`0` errores** (*Circuits match uniquely* en `results/physical/rom_100_40/signoff/70-netgen-lvs/reports/lvs.netgen.rpt`).
+- **Efecto Antena**: En el chequeo previo a la reparación (`40-openroad-checkantennas/reports/antenna_summary.rpt`) apareció **1 violación de antena** en la red `u_soc.g_spi.u_spi.mosi_sync[0]` conectada al pin de compuerta `u_soc.g_spi.u_spi._275_/D` en la capa **`Metal5`**, con razón parcial de área de **`460.48`** frente al límite de **`400.0`** (`1.15x`). Durante el grabado por plasma en fabricación, ese tramo largo de `Metal5` acumularía carga capaz de dañar el óxido de compuerta del flip-flop sincronizador. OpenROAD insertó automáticamente el diodo de protección **`ANTENNA_1`** (`gf180mcu_fd_sc_mcu7t5v0__antenna`) junto a la celda víctima (`586.32, 497.84 um`), dejando la verificación final (`46-openroad-checkantennas-1`) en **`0` violaciones** (documentado en `results/antenna_incident.json` y `results/layout/antena_corregida.png`).
 
 ---
 
 ## 6. Nota rápida si modificas algo durante la presentación
 
-Si durante la defensa el profesor te hace editar `config/rom_100_40.json` o descomprimir un reporte y al terminar quieres dejar la carpeta otra vez idéntica al repositorio entregado en GitHub, solo ejecuta:
+Si durante la defensa el profesor te hace editar `config/rom_100_40.json`, `sw/game.s` o descomprimir un reporte y al terminar quieres dejar la carpeta otra vez idéntica al repositorio entregado en GitHub, solo ejecuta:
 ```powershell
 cd C:\Users\anton\OneDrive\Escritorio\Lab3AdC\output\proyecto3\proyecto3_final
 git checkout -- .
