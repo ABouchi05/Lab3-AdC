@@ -1,0 +1,22 @@
+[
+  {
+    "util_logic_pct": 35.904827426572716,
+    "route_drc_iter0": 191,
+    "target_util_pct": 30
+  },
+  {
+    "util_logic_pct": 47.79318353123134,
+    "route_drc_iter0": 95,
+    "target_util_pct": 40
+  },
+  {
+    "util_logic_pct": 59.98031927332701,
+    "route_drc_iter0": 46,
+    "target_util_pct": 50
+  },
+  {
+    "util_logic_pct": 71.53182559865935,
+    "route_drc_iter0": 3618,
+    "target_util_pct": 60
+  }
+]

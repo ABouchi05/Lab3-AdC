@@ -1,0 +1,2 @@
+PASS memory reset, byte enables, ROM protection, unified writes, bounds
+C:\Users\anton\OneDrive\Escritorio\Lab 3 AdC\tests\tb_memory.v:27: $finish called at 120000 (1ps)

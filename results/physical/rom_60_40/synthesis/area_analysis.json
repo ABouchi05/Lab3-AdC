@@ -1,0 +1,63 @@
+{
+  "area_um2": 163731.18719999492,
+  "flip_flops": 914,
+  "cell_count": 5938,
+  "top_five": [
+    [
+      "gf180mcu_fd_sc_mcu7t5v0__dffrnq_1",
+      911
+    ],
+    [
+      "gf180mcu_fd_sc_mcu7t5v0__nand2_1",
+      902
+    ],
+    [
+      "gf180mcu_fd_sc_mcu7t5v0__mux2_2",
+      710
+    ],
+    [
+      "gf180mcu_fd_sc_mcu7t5v0__aoi22_1",
+      553
+    ],
+    [
+      "gf180mcu_fd_sc_mcu7t5v0__nor2_1",
+      352
+    ]
+  ],
+  "leaf_areas_um2": {
+    "u_soc.u_core.u_rf": 71587.66719999934,
+    "u_soc.u_ram": 25815.552000000152,
+    "u_soc.u_periph": 19300.19840000003,
+    "u_soc.u_core.u_id.u_alu": 10152.800000000021,
+    "u_soc.u_core.u_id": 10021.088000000027,
+    "u_soc.u_core.u_if": 8510.790400000013,
+    "u_soc.g_spi.u_spi": 6276.076800000021,
+    "u_soc.u_periph.u_cycle_counter": 3942.5792000000065,
+    "u_soc.u_core.u_lsu": 3211.577600000016,
+    "u_soc": 2559.603199999995,
+    "u_soc.u_core.u_id.u_decoder": 2045.9264000000037,
+    "$auto$insbuf": 237.0816,
+    "u_soc.u_core.u_ctrl": 70.2464
+  },
+  "hierarchy_areas_um2": {
+    "u_soc": 163494.10559999486,
+    "u_soc.u_core": 105600.09599999733,
+    "u_soc.u_core.u_rf": 71587.66719999934,
+    "u_soc.u_ram": 25815.552000000152,
+    "u_soc.u_periph": 23242.77760000007,
+    "u_soc.u_core.u_id": 22219.81440000015,
+    "u_soc.u_core.u_id.u_alu": 10152.800000000021,
+    "u_soc.u_core.u_if": 8510.790400000013,
+    "u_soc.g_spi": 6276.076800000021,
+    "u_soc.g_spi.u_spi": 6276.076800000021,
+    "u_soc.u_periph.u_cycle_counter": 3942.5792000000065,
+    "u_soc.u_core.u_lsu": 3211.577600000016,
+    "u_soc.u_core.u_id.u_decoder": 2045.9264000000037,
+    "$auto$insbuf": 237.0816,
+    "u_soc.u_core.u_ctrl": 70.2464
+  },
+  "counter_area_um2": 3942.5792000000065,
+  "counter_fraction": 0.024079585981284138,
+  "method": "Sum Liberty area attributes of mapped standard cells by preserved hierarchical instance name",
+  "source": "results\\physical\\rom_60_40\\synthesis\\asic_top.nl.v.json"
+}

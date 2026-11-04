@@ -1,0 +1,2 @@
+PASS ALU: 32000 vectors including overflow and signed compares
+C:\Users\anton\OneDrive\Escritorio\Lab 3 AdC\tests\tb_alu.v:31: $finish called at 32000000 (1ps)

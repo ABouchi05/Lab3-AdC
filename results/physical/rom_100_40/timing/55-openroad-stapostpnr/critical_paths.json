@@ -1,0 +1,212 @@
+[
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1280_",
+    "slack_ns": 37.342552,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1284_",
+    "slack_ns": 37.414318,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1287_",
+    "slack_ns": 37.509445,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1282_",
+    "slack_ns": 37.523201,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1281_",
+    "slack_ns": 37.52924,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1286_",
+    "slack_ns": 37.578438,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1278_",
+    "slack_ns": 37.592537,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2331_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 37.63578,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2332_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 37.703899,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2335_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 37.821411,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1288_",
+    "slack_ns": 38.011131,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2344_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.01767,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1289_",
+    "slack_ns": 38.052357,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1290_",
+    "slack_ns": 38.109783,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2359_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.659451,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2349_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.694901,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2342_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.706951,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2351_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.710499,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2340_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.738911,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2346_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.745022,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2362_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.770184,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2361_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.77475,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2345_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.845806,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2333_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 38.901085,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2357_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 39.364418,
+    "group": "clk_i"
+  },
+  {
+    "corner": "nom_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1280_",
+    "slack_ns": 39.442371,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2353_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 39.452248,
+    "group": "clk_i"
+  },
+  {
+    "corner": "nom_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1284_",
+    "slack_ns": 39.517498,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_ram._2337_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": 39.557079,
+    "group": "clk_i"
+  },
+  {
+    "corner": "nom_ss_125C_4v50",
+    "start": "u_soc.u_ram._2300_",
+    "end": "u_soc.u_periph._1287_",
+    "slack_ns": 39.599571,
+    "group": "clk_i"
+  }
+]

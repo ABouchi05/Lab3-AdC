@@ -1,0 +1,212 @@
+[
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19178_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.757061,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19174_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.591015,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19173_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.572788,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19176_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.56889,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19172_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.568249,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19170_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.497452,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19171_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.490417,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19166_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.484177,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19167_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.466686,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19164_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.371693,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19158_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.105595,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19157_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.082123,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19159_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.076008,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19156_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.041405,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19162_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.034222,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19163_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -33.003574,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19151_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.84,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19175_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.82679,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19154_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.823921,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19153_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.822647,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19179_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.819721,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19177_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.817554,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19148_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.813007,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19149_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.789658,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19155_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.628963,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19168_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.502293,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19165_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.471241,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19169_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.448433,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19160_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -32.05085,
+    "group": "clk_i"
+  },
+  {
+    "corner": "max_ss_125C_4v50",
+    "start": "u_soc.u_ram._19085_",
+    "end": "u_soc.u_ram._19161_ (rising edge-triggered flip-flop clocked by clk_i)",
+    "slack_ns": -31.974409,
+    "group": "clk_i"
+  }
+]

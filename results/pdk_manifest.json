@@ -1,0 +1,51 @@
+{
+  "pdk": "gf180mcuD",
+  "bundle_revision": "54435919abffb937387ec956209f9cf5fd2dfbee",
+  "standard_cell_library": "gf180mcu_fd_sc_mcu7t5v0",
+  "files": {
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/SOURCES": {
+      "sha256": "5bd56473e8dd0c5306c36aec0be20729ddf563aaa20c1e43f1ac9e558d24d3c2",
+      "bytes": 51
+    },
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/gds/gf180mcu_fd_sc_mcu7t5v0.gds": {
+      "sha256": "efa44f076c96508a0dae9afa00448c217d78e1a345b8e04c4f2a9765e79b26c4",
+      "bytes": 1450948
+    },
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/lef/gf180mcu_fd_sc_mcu7t5v0.lef": {
+      "sha256": "47dadf84c21b20f558d043c36271632f07b1c2c2a595b118e2e1050ebb74349b",
+      "bytes": 671072
+    },
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__ff_n40C_5v50.lib": {
+      "sha256": "6e04fbedf4279c89a73d6caebe55de27bd760f1aa7c24a4c015489724e4c2439",
+      "bytes": 20416204
+    },
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__ss_125C_4v50.lib": {
+      "sha256": "4c2657ae12581bc18ed408f3fda0accd10b855118b9993070dbb360dfa3aa874",
+      "bytes": 20001645
+    },
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/lib/gf180mcu_fd_sc_mcu7t5v0__tt_025C_5v00.lib": {
+      "sha256": "330aa9439255e3870ad7adfb987cd4d7bcfa7b6f9fb0cd0a712400e9bd80e38a",
+      "bytes": 20122761
+    },
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/techlef/gf180mcu_fd_sc_mcu7t5v0__max.tlef": {
+      "sha256": "7f97c3092cdc6c289444e08c40cf0c4cb20b8b272e573a245233bd49a8f4475c",
+      "bytes": 33056
+    },
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/techlef/gf180mcu_fd_sc_mcu7t5v0__min.tlef": {
+      "sha256": "5b6cf77e88477cbcd8f8a94a188c1e2a6ccbfc3a201df9c68b8792cc183a5e84",
+      "bytes": 33052
+    },
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/techlef/gf180mcu_fd_sc_mcu7t5v0__nom.tlef": {
+      "sha256": "1e15a88b384e015e5609a163fb8ce961309e122d450a69e189e57e528d464d65",
+      "bytes": 33043
+    },
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/verilog/gf180mcu_fd_sc_mcu7t5v0.v": {
+      "sha256": "9a21c5f98200acfe77d8ba52067164e0802284dc1c1e117f0e64fb6ac42eb64b",
+      "bytes": 975393
+    },
+    "/opt/lab3/pdks/ciel/gf180mcu/versions/54435919abffb937387ec956209f9cf5fd2dfbee/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/verilog/primitives.v": {
+      "sha256": "ccc0f447f71ce35c635e08d49eb0ed77aa2ec91cf31d8e3e45a246114d3cae92",
+      "bytes": 5541
+    }
+  }
+}

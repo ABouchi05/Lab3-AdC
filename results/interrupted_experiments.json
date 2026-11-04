@@ -1,0 +1,44 @@
+[
+  {
+    "manifest": "refinements.json",
+    "running_tags": [
+      "ff_60_40"
+    ],
+    "reason": "Exploratory unpadded queues superseded by explicit cell-padding experiment after zero global overflow but persistent detailed-routing conflicts",
+    "status": "interrupted_not_signoff_clean"
+  },
+  {
+    "manifest": "ff_lower_density.json",
+    "running_tags": [
+      "ff_100_20"
+    ],
+    "reason": "Exploratory unpadded queues superseded by explicit cell-padding experiment after zero global overflow but persistent detailed-routing conflicts",
+    "status": "interrupted_not_signoff_clean"
+  },
+  {
+    "manifest": "experiments.json",
+    "running_tags": [
+      "ff_100_40"
+    ],
+    "reason": "Unpadded detailed routing plateaued near 150 violations after 17 iterations; process stop completed, then its metadata logger raised AttributeError; this record recovers the verified stop",
+    "status": "interrupted_not_signoff_clean"
+  },
+  {
+    "manifest": "padded_memory.json",
+    "running_tags": [
+      "ffp_60_40",
+      "ffp_40_40"
+    ],
+    "cancelled_before_start": [],
+    "reason": "global_congestion_trial_failed_and_remaining_queue_was_stopped_metadata_recovered",
+    "status": "interrupted_not_signoff_clean"
+  },
+  {
+    "manifest": "placement_density.json",
+    "running_tags": [
+      "ffq_40_40"
+    ],
+    "reason": "Optional 40 ns unified trial stopped after 100 ns full closure and negative 60 ns post-RCX setup; selected ROM has seven completed timing points",
+    "status": "interrupted_not_signoff_clean"
+  }
+]

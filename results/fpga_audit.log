@@ -1,0 +1,45 @@
+[00:00:38] INFO     Starting a new run of the 'Classic' flow with    flow.py:654
+                    the tag 'fpga_audit'.                                       
+[00:00:38] INFO     Starting…                                  sequential.py:339
+──────────────────────────────── Verilator Lint ────────────────────────────────
+[00:00:38] VERBOSE  Running 'Verilator.Lint' at                     step.py:1138
+                    'config/runs/fpga_audit/01-verilator-lint'…                 
+[00:00:40] VERBOSE  Logging subprocess to                           step.py:1338
+                    'config/runs/fpga_audit/01-verilator-lint/veril             
+                    ator-lint.log'…                                             
+%Error-MODMISSING:                                                              
+/opt/lab3/fpga_reference/rtl/espino_core/espino_register_file.v:22:3: Cannot    
+find file containing module: 'SB_RAM40_4K'                                      
+   22 |   SB_RAM40_4K #(                                                        
+      |   ^~~~~~~~~~~                                                           
+                   ... For error description see                                
+https://verilator.org/warn/MODMISSING?v=5.044                                   
+                   ... This may be because there's no search path specified with
+-I<dir>.                                                                        
+                   ... Looked in:                                               
+                        SB_RAM40_4K                                             
+                        SB_RAM40_4K.v                                           
+                        SB_RAM40_4K.sv                                          
+                        obj_dir/SB_RAM40_4K                                     
+                        obj_dir/SB_RAM40_4K.v                                   
+                        obj_dir/SB_RAM40_4K.sv                                  
+%Error-MODMISSING:                                                              
+/opt/lab3/fpga_reference/rtl/espino_core/espino_register_file.v:33:3: Cannot    
+find file containing module: 'SB_RAM40_4K'                                      
+   33 |   SB_RAM40_4K #(                                                        
+      |   ^~~~~~~~~~~                                                           
+%Error: Exiting due to 2 error(s)                                               
+────────────────────────── Lint Timing Errors Checker ──────────────────────────
+[00:00:40] VERBOSE  Running 'Checker.LintTimingConstructs' at       step.py:1138
+                    'config/runs/fpga_audit/02-checker-linttimingco             
+                    nstructs'…                                                  
+[00:00:40] INFO     Check for Lint Timing Errors clear.           checker.py:412
+───────────────────────────── Lint Errors Checker ──────────────────────────────
+[00:00:40] VERBOSE  Running 'Checker.LintErrors' at                 step.py:1138
+                    'config/runs/fpga_audit/03-checker-linterrors'…             
+[00:00:40] ERROR    2 Lint errors found.                          checker.py:127
+Classic - Stage 3 - Lint Errors Checker ╸                           2/80 0:00:01
+[00:00:40] ERROR    The following error was encountered while    __main__.py:189
+                    running the flow:                                           
+                    2 Lint errors found.                                        
+[00:00:40] ERROR    LibreLane will now quit.                     __main__.py:190

@@ -1,0 +1,13 @@
+PASS incorrect press repeats round
+MEASURE start=10754 press=12254 elapsed=1503 ticks=1
+MEASURE start=18137 press=19764 elapsed=1630 ticks=1
+MEASURE start=25494 press=27248 elapsed=1757 ticks=1
+MEASURE start=32836 press=34717 elapsed=1884 ticks=1
+MEASURE start=40598 press=42606 elapsed=2011 ticks=2
+MEASURE start=48443 press=50578 elapsed=2138 ticks=2
+MEASURE start=56342 press=58604 elapsed=2265 ticks=2
+MEASURE start=64326 press=66715 elapsed=2392 ticks=2
+MEASURE start=72426 press=74942 elapsed=2519 ticks=2
+MEASURE start=80661 press=83304 elapsed=2646 ticks=2
+PASS 10 rounds, average, restart
+/opt/lab3/design/tests/tb_asic.v:87: $finish called at 8918600000 (1ps)

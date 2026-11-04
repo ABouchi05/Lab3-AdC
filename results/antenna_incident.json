@@ -1,0 +1,27 @@
+{
+  "initial_report": "/opt/lab3/design/config/runs/rom_100_40/40-openroad-checkantennas/reports/antenna_summary.rpt",
+  "initial_net": "u_soc.g_spi.u_spi.mosi_sync[0\\]",
+  "victim": "u_soc.g_spi.u_spi._275_/D",
+  "layer": "Metal5",
+  "partial_ratio": 460.48,
+  "required_ratio": 400.0,
+  "multiplier": 1.15,
+  "final_net": "u_soc.g_spi.u_spi.mosi_sync\\[0\\]",
+  "victim_box_um": [
+    586.32,
+    501.76,
+    605.36,
+    505.68
+  ],
+  "diodes": [
+    {
+      "name": "ANTENNA_1",
+      "box_um": [
+        586.32,
+        497.84,
+        587.44,
+        501.76
+      ]
+    }
+  ]
+}

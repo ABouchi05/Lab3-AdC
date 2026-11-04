@@ -1,0 +1,20 @@
+* -text
+*.cfg text eol=lf
+*.hex text eol=lf
+*.json text eol=lf
+*.log text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.rpt text eol=lf
+*.s text eol=lf
+*.sh text eol=lf
+*.txt text eol=lf
+*.v text eol=lf
+*.vh text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+*.gds binary
+*.odb binary
+*.png binary
+*.pdf binary
+*.gz binary

@@ -1,0 +1,12 @@
+anterior/
+build/
+runs/
+config/runs/
+__pycache__/
+*.pyc
+sw/*.symbols.json
+trace.csv
+output/*.zip
+results/physical/*/final/
+!results/physical/rom_100_40/final/
+.venv-report/
